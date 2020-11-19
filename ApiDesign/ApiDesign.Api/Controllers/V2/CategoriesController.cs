@@ -133,14 +133,14 @@ namespace ApiDesign.Api.Controllers.V2
             }
         }
 
-        [HttpPut("{id:long}/follow)", Name = nameof(Follow))]
+        [HttpPut("follow/{id:long})", Name = nameof(Follow))]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(404)]
         public IActionResult Follow(long id)
         {
             try
             {
-                var isExist = CommonSeedModel.CategoriesV2.Exists(x => x.Id == 1);
+                var isExist = CommonSeedModel.CategoriesV2.Exists(x => x.Id == id);
                 if (!isExist)
                     return NotFound(new BaseResponseModel("Kategori bulunamadı."));
                 return Ok(new BaseResponseModel("Kategori takip edildi."));
@@ -171,7 +171,7 @@ namespace ApiDesign.Api.Controllers.V2
             }
         }
 
-        [HttpPut("{id:long}/unfollow", Name = nameof(Unfollow))]
+        [HttpPut("unfollow/{id:long}", Name = nameof(Unfollow))]
         [ApiVersion("2.1")]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(404)]

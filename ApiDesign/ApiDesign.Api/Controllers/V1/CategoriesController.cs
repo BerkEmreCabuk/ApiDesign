@@ -5,14 +5,11 @@ using ApiDesign.Api.Models.RequestModels;
 using ApiDesign.Api.Models.ResponseModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Web.Http.Description;
 
 namespace ApiDesign.Api.Controllers.V1
 {
@@ -143,14 +140,14 @@ namespace ApiDesign.Api.Controllers.V1
             }
         }
 
-        [HttpPut("{id:long}/follow)", Name = nameof(Follow))]
+        [HttpPut("follow/{id:long})", Name = nameof(Follow))]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(404)]
         public IActionResult Follow(long id)
         {
             try
             {
-                var isExist = CommonSeedModel.CategoriesV1.Exists(x => x.Id == 1);
+                var isExist = CommonSeedModel.CategoriesV1.Exists(x => x.Id == id);
                 if (!isExist)
                     return NotFound(new BaseResponseModel("Kategori bulunamadı."));
                 return Ok(new BaseResponseModel("Kategori takip edildi."));
@@ -181,7 +178,7 @@ namespace ApiDesign.Api.Controllers.V1
             }
         }
 
-        [HttpPut("{id:long}/unfollow", Name = nameof(Unfollow))]
+        [HttpPut("unfollow/{id:long}", Name = nameof(Unfollow))]
         [ApiVersion("1.1")]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(404)]
